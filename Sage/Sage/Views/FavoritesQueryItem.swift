@@ -14,24 +14,26 @@ struct FavoritesQueryItem: View {
     private let textDefinitionSize: CGFloat = 16.0
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            HStack {
-                Text(word)
-                    .font(.headline)
-                    .lineLimit(1)
-                Text("|")
-                    .opacity(0.8)
-                Text(pronounciation)
-                    .font(.subheadline)
-                    .foregroundColor(.favoritesQueryItemHint)
+        Button(action: {}) {
+            VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    Text(word)
+                        .font(.headline)
+                        .lineLimit(1)
+                    Text("|")
+                        .foregroundColor(.favoritesQueryItemHint)
+                    Text(pronounciation)
+                        .font(.subheadline)
+                        .foregroundColor(.favoritesQueryItemHint)
+                        .lineLimit(1)
+                }
+
+                Text(definition)
+                    .font(.system(size: textDefinitionSize))
                     .lineLimit(1)
             }
-
-            Text(definition)
-                .font(.system(size: textDefinitionSize))
-                .lineLimit(2)
+            .foregroundColor(.accentColor)
         }
-        .foregroundColor(.accentColor)
     }
 }
 

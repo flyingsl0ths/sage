@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct WordCard: View {
-    private let title: CGFloat = 34
-    private let subTitle: CGFloat = 16
-    private let buttonFontSize: CGFloat = 12
+    @State private var offset = CGSize.zero
+    @State private var rotation: Double = 0
 
     let word: Favorite
     let total: Int
@@ -18,11 +17,13 @@ struct WordCard: View {
     @Binding var currentIndex: Int
     let onSwiped: (_: Int) -> Void
 
-    @State private var offset = CGSize.zero
-    @State private var rotation: Double = 0
-
     var body: some View {
         let query = word.query
+
+        let title: CGFloat = 34
+        let subTitle: CGFloat = 16
+        let buttonFontSize: CGFloat = 12
+
         VStack(spacing: 60) {
             VStack(spacing: 8) {
                 Text(query.word)
@@ -62,6 +63,7 @@ struct WordCard: View {
                                         .stroke(Color.black, lineWidth: 1)
                                 )
                         }
+                        .disabled(true)
                     }
                 }
                 .frame(
@@ -88,29 +90,29 @@ struct WordCard: View {
                     rotation = Double(offset.width / 20)
                 }
                 .onEnded { _ in
-                    if offset.width > 150 {
-                        onSwipeRight()
-                    } else if offset.width < -150 {
-                        onSwipeLeft()
+                    var next = currentIndex
+                    if offset.width > 100 {
+                        next = onSwipeRight()
+                    } else if offset.width < -100 {
+                        next = onSwipeLeft()
                     }
 
-                    // Resets the card to it's original state
-                    // if user abruptly let's go of the card
                     offset = .zero
                     rotation = 0
+                    currentIndex = next
                 }
         )
         .animation(.spring(), value: offset)
 
     }
 
-    func onSwipeRight() {
+    func onSwipeRight() -> Int {
         let next = (currentIndex + 1) % total
         onSwiped(next)
-        currentIndex = next
+        return next
     }
 
-    func onSwipeLeft() {
+    func onSwipeLeft() -> Int {
         var next = currentIndex
         if next == 0 {
             if total > 1 {
@@ -121,25 +123,13 @@ struct WordCard: View {
         }
 
         onSwiped(next)
-        currentIndex = next
-
+        return next
     }
 }
 
 #Preview {
     WordCard(
-        word: Favorite(
-            query: Query(
-                word: "Serendipity",
-                pronounciation: "seh-ren-DIP-uh-tee",
-                definition:
-                    "The occurrence of events by chance in a happy or beneficial way."
-            ),
-            synonyms: [
-                "fluke", "fortune", "luck", "coincidence", "happy accident",
-            ]
-        ),
-
+        word: SampleData.favorite,
         total: 5,
         currentIndex: .constant(0)
     ) { _ in }

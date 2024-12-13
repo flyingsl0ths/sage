@@ -8,31 +8,86 @@
 import SwiftUI
 
 struct HomeView: View {
+    static private var springAnimationDuration: Double = 0.2825
+
     @State private var searchQuery: String = ""
-    private var symbolSize: CGFloat = 24
-    private var symbolWidth: CGFloat = 24 + 2
-    private var bottomBarPadding = 16.0
+    @State private var animateScale: CGSize = 1.0.toCGSize()
+    @State private var search: Bool = false
+    @State private var toSearchView = false
+
+    @State private var favorites: [Favorite] = SampleData.favorites
+
+    var size: CGFloat = 100
 
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
+        let symbolSize: CGFloat = 24
+        let bottomBarPadding = 16.0
 
-            Text("Sage").font(.largeTitle)
+        NavigationStack {
+            VStack(spacing: 32) {
+                Spacer()
 
-            SearchBar(searchQuery: $searchQuery)
+                Text("Sage").font(.largeTitle)
+                    .scaleEffect(animateScale)
 
-            Spacer()
+                SearchBar(searchQuery: $searchQuery) { _ in
+                    withAnimation {
+                        search = true
+                    }
 
-            HStack {
-                SettingsButton(symbolSize: symbolSize)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(
+                            .bouncy(duration: 0.3, extraBounce: 0.5)
+                        ) {
+                            animateScale = 1.3.toCGSize()
+                        }
+                    }
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        search = false
+
+                        withAnimation(
+                            .easeOut(duration: 0.3)
+                        ) {
+                            animateScale = 0.0.toCGSize()
+                        }
+                        toSearchView = true
+                    }
+                }
+                .navigationDestination(
+                    isPresented: $toSearchView,
+                    destination: {
+                        AddToFavoritesView()
+                            .padding([.top], 20)
+                            .onDisappear {
+                                withAnimation(
+                                    .bouncy(duration: 0.25)
+                                ) {
+                                    animateScale = 1.0.toCGSize()
+                                }
+
+                                search = false
+                                toSearchView = false
+                            }
+                    })
 
                 Spacer()
 
-                FavoritesButton(size: symbolSize)
-            }.padding(
-                EdgeInsets(
-                    top: 0, leading: 32, bottom: bottomBarPadding, trailing: 32)
-            )
+                HStack {
+                    SettingsButton(symbolSize: symbolSize)
+
+                    Spacer()
+
+                    FavoritesButton(
+                        favorites: $favorites,
+                        size: symbolSize
+                    )
+                }.padding(
+                    EdgeInsets(
+                        top: 0, leading: 32, bottom: bottomBarPadding,
+                        trailing: 32)
+                )
+            }
         }
     }
 }

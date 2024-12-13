@@ -10,7 +10,7 @@ import SwiftUI
 struct SentencesView: View {
     private let textSize: CGFloat = 14.0
 
-    private let tenses = [
+    static private let tenses = [
         "BASE",
         "PRESENT I",
         "PAST I",
@@ -29,12 +29,12 @@ struct SentencesView: View {
             Text("Sentences").font(.largeTitle).underline().frame(
                 maxWidth: .infinity, alignment: .leading
             )
-            .padding(EdgeInsets(top: 0, leading: 70, bottom: 0, trailing: 0))
+            .offset(x: 70)
 
             HStack(spacing: 4) {
                 ScrollView {
                     VStack(spacing: 70) {
-                        ForEach(tenses, id: \.hash) { tense in
+                        ForEach(SentencesView.tenses, id: \.hash) { tense in
                             Button(action: {
                                 activeTense = tense
                             }) {
@@ -56,15 +56,13 @@ struct SentencesView: View {
                             .foregroundColor(.black)
                             .rotationEffect(.degrees(-90))
                             .font(.system(size: textSize))
-                            .padding(0)
                         }
                     }
-                    .padding(
-                        EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0)
-                    )
+                    .offset(y: 15)
+
                     .frame(width: 73)
 
-                }.padding(0)
+                }
 
                 ScrollView {
                     VStack(spacing: 35) {
@@ -76,19 +74,12 @@ struct SentencesView: View {
                     }
                 }
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
-        }.padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 0))
+        }.offset(y: 15)
     }
 }
 
 #Preview {
-    let sentences: [String] = [
-        "Hedonism promotes the pursuit of pleasure as the highest good.",
-        "Many philosophers debate the merits of hedonism in ethical discussions.",
-        "Hedonism often emphasizes the importance of immediate gratification.",
-        "Some people view hedonism as a lifestyle choice that prioritizes enjoyment.",
-        "Critics argue that hedonism can lead to a superficial understanding of happiness.",
-    ]
-
     SentencesView(
-        sentences: sentences, word: "Hedonism")
+        sentences: SampleData.baseSentences,
+        word: "Hedonism")
 }

@@ -8,47 +8,9 @@
 import SwiftUI
 
 struct AddToFavoritesView: View {
-    @Binding var word: String
+    @State private var word: String = ""
 
-    @State private var results: [Query] = [
-        Query(
-            word: "ephemeral", pronounciation: "ih-FEM-er-uhl",
-            definition: "Lasting a very short time."),
-        Query(
-            word: "epicenter", pronounciation: "EP-uh-sen-ter",
-            definition:
-                "The point on the Earth's surface directly above the focus of an earthquake."
-        ),
-        Query(
-            word: "epitome", pronounciation: "ih-PIT-uh-mee",
-            definition: "A perfect example of a quality or type."),
-        Query(
-            word: "epigraph", pronounciation: "EP-i-graf",
-            definition:
-                "A short quotation at the beginning of a book or chapter."),
-        Query(
-            word: "epiphany", pronounciation: "ih-PIF-uh-nee",
-            definition: "A sudden realization or insight."),
-        Query(
-            word: "epidermis", pronounciation: "ep-i-DUR-mis",
-            definition: "The outer layer of skin."),
-        Query(
-            word: "epitaph", pronounciation: "EP-i-taf",
-            definition:
-                "A phrase or statement written in memory of someone who has died, especially on a tombstone."
-        ),
-        Query(
-            word: "epistolary", pronounciation: "ih-PIS-tuh-ler-ee",
-            definition: "Relating to the writing of letters."),
-        Query(
-            word: "epoxide", pronounciation: "EP-ok-sahyd",
-            definition: "A cyclic ether with a three-atom ring."),
-        Query(
-            word: "epicurean", pronounciation: "ep-i-KYOOR-ee-uhn",
-            definition:
-                "Devoted to the pursuit of pleasure, especially in food and comfort."
-        ),
-    ]
+    @State private var results: [Query] = SampleData.queryResults
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
@@ -63,18 +25,15 @@ struct AddToFavoritesView: View {
                             pronounciation: result.pronounciation,
                             definition: result.definition
                         )
-                        .padding(
-                            EdgeInsets(
-                                top: 0, leading: 0, bottom: 0, trailing: 20))
+                        .padding(.vertical, 4)
                     }
                 }
-                .padding(
-                    EdgeInsets(top: 0, leading: 36, bottom: 0, trailing: 0))
+                .padding(.horizontal, 36)
             }
         }
     }
 }
 
 #Preview {
-    AddToFavoritesView(word: .constant("ep"))
+    AddToFavoritesView()
 }

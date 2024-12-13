@@ -21,21 +21,16 @@ struct SentenceItem: View {
             RoundedRectangle(cornerRadius: radius)
                 .foregroundStyle(bgColor)
                 .frame(width: .infinity, height: frameHeight)
-                .padding(0)
 
             Text(text)
                 .frame(
                     width: .infinity, height: frameHeight, alignment: .center
                 )
-                .padding(
-                    EdgeInsets(
-                        top: 0, leading: textPadding, bottom: 0,
-                        trailing: textPadding)
-                )
+                .padding(.horizontal, textPadding)
                 .font(.system(size: textSize))
                 .lineLimit(2)
                 .zIndex(1)
-        }.padding(0)
+        }
     }
 }
 

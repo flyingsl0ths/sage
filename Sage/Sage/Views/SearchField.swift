@@ -14,7 +14,6 @@ struct SearchField: View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
                 .frame(height: 44)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .foregroundColor(.inputFieldBg)
             if searchQuery.isEmpty {
                 Text("Type something...")
