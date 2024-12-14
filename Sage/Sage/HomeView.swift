@@ -17,8 +17,6 @@ struct HomeView: View {
 
     @State private var favorites: [Favorite] = SampleData.favorites
 
-    var size: CGFloat = 100
-
     var body: some View {
         let symbolSize: CGFloat = 24
         let bottomBarPadding = 16.0
@@ -58,7 +56,7 @@ struct HomeView: View {
                     isPresented: $toSearchView,
                     destination: {
                         AddToFavoritesView()
-                            .padding([.top], 20)
+                            .padding([.top], 16)
                             .onDisappear {
                                 withAnimation(
                                     .bouncy(duration: 0.25)
