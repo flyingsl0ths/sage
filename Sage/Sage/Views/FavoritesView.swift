@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     @ScaledMetric private var cardPadding: CGFloat = 64
-    @State private var currentIndex: Int = 0
+    @State private var currentIndex: Int = SampleData.favorites.count - 1
     @State private var showSearchSheet = false
     @Binding var favorites: [Favorite]
 
@@ -26,8 +26,8 @@ struct FavoritesView: View {
                         word: favorite,
                         total: total,
                         currentIndex: $currentIndex
-                    ) { updatedIndex in
-                        swapCard(next: updatedIndex)
+                    ) { current, updated in
+                        swapCard(current: current, next: updated)
                     }
                     .padding(cardPadding)
                 }
@@ -95,8 +95,8 @@ struct FavoritesView: View {
         .padding(.vertical, 32)
     }
 
-    private func swapCard(next: Int) {
-        favorites.swapAt(favorites.count - 1, next)
+    private func swapCard(current: Int, next: Int) {
+        favorites.swapAt(current, next)
     }
 
 }

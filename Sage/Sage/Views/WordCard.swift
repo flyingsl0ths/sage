@@ -15,7 +15,7 @@ struct WordCard: View {
     let total: Int
 
     @Binding var currentIndex: Int
-    let onSwiped: (_: Int) -> Void
+    let onSwiped: (_: Int, _: Int) -> Void
 
     var body: some View {
         let query = word.query
@@ -90,16 +90,18 @@ struct WordCard: View {
                     rotation = Double(offset.width / 20)
                 }
                 .onEnded { _ in
-                    var next = currentIndex
-                    if offset.width > 100 {
-                        next = onSwipeRight()
-                    } else if offset.width < -100 {
-                        next = onSwipeLeft()
+                    if offset.width > 150 {
+                        let next = onSwipeRight()
+                        print(next)
+                        currentIndex = next
+                    } else if offset.width < -150 {
+                        let next = onSwipeLeft()
+                        print(next)
+                        currentIndex = next
                     }
 
                     offset = .zero
                     rotation = 0
-                    currentIndex = next
                 }
         )
         .animation(.spring(), value: offset)
@@ -108,7 +110,7 @@ struct WordCard: View {
 
     func onSwipeRight() -> Int {
         let next = (currentIndex + 1) % total
-        onSwiped(next)
+        onSwiped(currentIndex, next)
         return next
     }
 
@@ -116,13 +118,13 @@ struct WordCard: View {
         var next = currentIndex
         if next == 0 {
             if total > 1 {
-                next = total - 2
+                next = total - 1
             }
         } else {
             next = (currentIndex - 1) % total
         }
 
-        onSwiped(next)
+        onSwiped(currentIndex, next)
         return next
     }
 }
@@ -132,5 +134,5 @@ struct WordCard: View {
         word: SampleData.favorite,
         total: 5,
         currentIndex: .constant(0)
-    ) { _ in }
+    ) { _, _ in }
 }
