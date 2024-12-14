@@ -14,7 +14,6 @@ struct AddToFavoritesView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
-
             SearchBar(searchQuery: $word)
 
             ScrollView {
@@ -31,6 +30,8 @@ struct AddToFavoritesView: View {
                 .padding(.horizontal, 36)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+
     }
 }
 
