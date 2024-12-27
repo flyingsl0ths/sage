@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddToFavoritesView: View {
+struct SearchView: View {
     @State private var word: String = ""
 
     @State private var results: [Query] = SampleData.queryResults
@@ -37,5 +37,5 @@ struct AddToFavoritesView: View {
 }
 
 #Preview {
-    AddToFavoritesView()
+    SearchView()
 }

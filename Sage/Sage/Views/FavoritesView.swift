@@ -86,7 +86,7 @@ struct FavoritesView: View {
                 }.sheet(
                     isPresented: $showSearchSheet,
                     content: {
-                        AddToFavoritesView()
+                        SearchView()
                             .padding(.vertical, 48)
                             .presentationDetents([.medium, .large])
                     })

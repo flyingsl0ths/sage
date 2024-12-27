@@ -55,7 +55,7 @@ struct HomeView: View {
                 .navigationDestination(
                     isPresented: $toSearchView,
                     destination: {
-                        AddToFavoritesView()
+                        SearchView()
                             .padding([.top], 16)
                             .onDisappear {
                                 withAnimation(
