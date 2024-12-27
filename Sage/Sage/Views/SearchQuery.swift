@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavoritesQueryItem: View {
+struct SearchQuery: View {
     var word: String
     var pronounciation: String
     var definition: String
@@ -37,7 +37,7 @@ struct FavoritesQueryItem: View {
 }
 
 #Preview {
-    FavoritesQueryItem(
+    SearchQuery(
         word: "Hedonism", pronounciation: "ˈhēdnˌizəm, ˈhēdəˌnizəm",
         definition: "The pursuit of pleasure and happiness.")
 }
