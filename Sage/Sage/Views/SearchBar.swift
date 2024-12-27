@@ -21,7 +21,7 @@ struct SearchBar: View {
                     onSearch($searchQuery)
                 }
         }
-        .padding([.leading, .trailing], 32)
+        .padding([.leading, .trailing], 30)
     }
 }
 

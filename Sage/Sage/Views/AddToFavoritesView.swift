@@ -19,7 +19,7 @@ struct AddToFavoritesView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     ForEach(results, id: \.word.hash) { result in
-                        FavoritesQueryItem(
+                        SearchQuery(
                             word: result.word,
                             pronounciation: result.pronounciation,
                             definition: result.definition
@@ -28,7 +28,7 @@ struct AddToFavoritesView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-                .padding(.horizontal, 36)
+                .padding(.horizontal, 30)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

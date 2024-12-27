@@ -80,7 +80,7 @@ struct SettingsView: View {
                     .offset(y: -toggleOffset)
             }
 
-        }.padding(.horizontal, 28)
+        }.padding(.horizontal, 30)
             .offset(y: 15)
             .frame(maxHeight: .infinity, alignment: .top)
     }

@@ -92,7 +92,7 @@ struct FavoritesView: View {
                     })
             }
         }
-        .padding(.vertical, 32)
+        .padding(.vertical, 30)
     }
 
     private func swapCard(current: Int, next: Int) {

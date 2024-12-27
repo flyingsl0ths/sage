@@ -82,8 +82,8 @@ struct HomeView: View {
                     )
                 }.padding(
                     EdgeInsets(
-                        top: 0, leading: 32, bottom: bottomBarPadding,
-                        trailing: 32)
+                        top: 0, leading: 30, bottom: bottomBarPadding,
+                        trailing: 30)
                 )
             }
         }
