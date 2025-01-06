@@ -9,13 +9,12 @@ import SwiftUI
 
 struct FavoritesView: View {
     @ScaledMetric private var cardPadding: CGFloat = 64
-    @State private var currentIndex: Int = SampleData.favorites.count - 1
+    @State private var currentIndex = 0
     @State private var showSearchSheet = false
     @Binding var favorites: [Favorite]
 
     var body: some View {
         VStack(spacing: 40) {
-            let total = favorites.count
             Text("Favorites").font(.largeTitle).underline().frame(
                 maxWidth: .infinity, alignment: .center
             )
@@ -95,8 +94,8 @@ struct FavoritesView: View {
         .padding(.vertical, 30)
     }
 
-    private func swapCard(current: Int, next: Int) {
-        favorites.swapAt(current, next)
+    private func swapCard(next: Int) {
+        favorites.swapAt(favorites.count - 1, next)
     }
 
 }

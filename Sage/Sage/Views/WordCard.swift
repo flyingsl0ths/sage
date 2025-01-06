@@ -15,7 +15,8 @@ struct WordCard: View {
     let total: Int
 
     @Binding var currentIndex: Int
-    let onSwiped: (_: Int, _: Int) -> Void
+    @Binding var copiedToClipboard: Bool
+    let onSwiped: (_: Int) -> Void
 
     var body: some View {
         let query = word.query
@@ -53,7 +54,16 @@ struct WordCard: View {
 
                 HStack(spacing: 24) {
                     ForEach(word.synonyms, id: \.self) { synonym in
-                        Button(action: {}) {
+                        Button(action: {
+                            UIPasteboard.general.string = synonym
+                            copiedToClipboard.toggle()
+
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + 0.85
+                            ) {
+                                copiedToClipboard.toggle()
+                            }
+                        }) {
                             Text(synonym)
                                 .font(.system(size: buttonFontSize))
                                 .foregroundStyle(.black)
@@ -63,7 +73,6 @@ struct WordCard: View {
                                         .stroke(Color.black, lineWidth: 1)
                                 )
                         }
-                        .disabled(true)
                     }
                 }
                 .frame(
@@ -75,7 +84,7 @@ struct WordCard: View {
             }
 
         }.background(
-            RoundedRectangle(cornerRadius: 40).fill(
+            RoundedRectangle(cornerRadius: 30).fill(
                 Color(hex: Palette.fromString(query.word))
             )
             .padding(-40)
@@ -86,17 +95,14 @@ struct WordCard: View {
             DragGesture()
                 .onChanged { gesture in
                     offset = gesture.translation
-                    // Rotate with horizontal drag
                     rotation = Double(offset.width / 20)
                 }
                 .onEnded { _ in
-                    if offset.width > 150 {
+                    if offset.width > -150 {
                         let next = onSwipeRight()
-                        print(next)
                         currentIndex = next
-                    } else if offset.width < -150 {
+                    } else if offset.width < 150 {
                         let next = onSwipeLeft()
-                        print(next)
                         currentIndex = next
                     }
 
@@ -109,22 +115,21 @@ struct WordCard: View {
     }
 
     func onSwipeRight() -> Int {
-        let next = (currentIndex + 1) % total
-        onSwiped(currentIndex, next)
+        let next =
+            currentIndex + 1 == total - 1
+            ? 0 : (currentIndex + 1) % total
+        print("Right: \(next)")
+        onSwiped(next)
         return next
     }
 
     func onSwipeLeft() -> Int {
-        var next = currentIndex
-        if next == 0 {
-            if total > 1 {
-                next = total - 1
-            }
-        } else {
-            next = (currentIndex - 1) % total
+        var next = (currentIndex - 1) % total
+        if next < 0 {
+            next = total - 2
         }
-
-        onSwiped(currentIndex, next)
+        print("Left: \(next)")
+        onSwiped(next)
         return next
     }
 }
@@ -133,6 +138,7 @@ struct WordCard: View {
     WordCard(
         word: SampleData.favorite,
         total: 5,
-        currentIndex: .constant(0)
-    ) { _, _ in }
+        currentIndex: .constant(0),
+        copiedToClipboard: .constant(false)
+    ) { _ in }
 }
