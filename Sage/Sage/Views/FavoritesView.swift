@@ -8,27 +8,63 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @ScaledMetric private var cardPadding: CGFloat = 64
     @State private var currentIndex = 0
     @State private var showSearchSheet = false
+    @State private var toSearchQueryView = false
+    @State private var showCopiedToClipboardPopup = false
     @Binding var favorites: [Favorite]
 
     var body: some View {
-        VStack(spacing: 40) {
-            Text("Favorites").font(.largeTitle).underline().frame(
-                maxWidth: .infinity, alignment: .center
-            )
+        VStack {
+            Text("Favorites")
+                .font(.largeTitle).underline().frame(
+                    maxWidth: .infinity, alignment: .leading
+                )
+                .padding(.vertical, 16)
+                .padding(.horizontal, 36)
+
+            let copiedToClipboardOffset = 16.0
+
+            Text("Copied to clipboard")
+                .zIndex(1)
+                .foregroundStyle(.black)
+                .offset(
+                    y: showCopiedToClipboardPopup
+                        ? copiedToClipboardOffset : -copiedToClipboardOffset
+                )
+                .opacity(showCopiedToClipboardPopup ? 0.8 : 0)
+                .animation(
+                    .bouncy(duration: 0.8),
+                    value: showCopiedToClipboardPopup
+                )
+                .background(
+                    RoundedRectangle(cornerRadius: 28)
+                        .offset(
+                            y: showCopiedToClipboardPopup
+                                ? copiedToClipboardOffset
+                                : -copiedToClipboardOffset
+                        )
+                        .animation(
+                            .bouncy(duration: 0.8),
+                            value: showCopiedToClipboardPopup
+                        )
+                        .padding(-18)
+                        .foregroundStyle(
+                            .gray.opacity(
+                                showCopiedToClipboardPopup ? 0.2 : 0
+                            )))
 
             ZStack {
                 ForEach(favorites, id: \.self) { favorite in
                     WordCard(
                         word: favorite,
-                        total: total,
-                        currentIndex: $currentIndex
-                    ) { current, updated in
-                        swapCard(current: current, next: updated)
+                        total: favorites.count,
+                        currentIndex: $currentIndex,
+                        copiedToClipboard: $showCopiedToClipboardPopup
+                    ) { updated in
+                        swapCard(next: updated)
                     }
-                    .padding(cardPadding)
+                    .padding(.horizontal, 66)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -85,13 +121,30 @@ struct FavoritesView: View {
                 }.sheet(
                     isPresented: $showSearchSheet,
                     content: {
-                        SearchView()
-                            .padding(.vertical, 48)
-                            .presentationDetents([.medium, .large])
+                        SearchView(
+                            exitOnTap: $showSearchSheet,
+                            toSearchQueryView: $toSearchQueryView
+                        )
+                        .padding(.vertical, 48)
+                        .presentationDetents([.medium, .large])
                     })
             }
         }
-        .padding(.vertical, 30)
+        .frame(maxHeight: .infinity)
+        .zIndex(0)
+        .onAppear {
+            currentIndex = favorites.count - 1
+        }
+        .navigationDestination(
+            isPresented: $toSearchQueryView,
+            destination: {
+                SearchQueryView()
+                    .onDisappear {
+                        toSearchQueryView = false
+                        showSearchSheet = true
+                    }
+            }
+        )
     }
 
     private func swapCard(next: Int) {

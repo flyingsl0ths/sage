@@ -14,17 +14,19 @@ struct SearchField: View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 12)
                 .frame(height: 44)
+                .frame(maxWidth: .infinity)
                 .foregroundColor(.inputFieldBg)
             if searchQuery.isEmpty {
                 Text("Type something...")
                     .foregroundColor(.accentColor)
-                    .padding(2)
-                    .offset(x: 8)
+                    .padding(8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             TextField("", text: $searchQuery)
-                .padding(2)
+                .padding(.trailing, 18)
                 .foregroundColor(.accentColor)
                 .offset(x: 8)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

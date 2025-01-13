@@ -20,11 +20,11 @@ struct SentenceItem: View {
 
             RoundedRectangle(cornerRadius: radius)
                 .foregroundStyle(bgColor)
-                .frame(width: .infinity, height: frameHeight)
+                .frame(height: frameHeight)
 
             Text(text)
                 .frame(
-                    width: .infinity, height: frameHeight, alignment: .center
+                    height: frameHeight, alignment: .center
                 )
                 .padding(.horizontal, textPadding)
                 .font(.system(size: textSize))
