@@ -2,4 +2,4 @@
 
 A dictionary app for iOS
 
-![[screenshots/home.png]]
+![[HomeScreen]](screenshots/home.png)
