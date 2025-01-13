@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var showColorPicker = false
 
     var body: some View {
-        let textScale = 1.25
+        let viewScaling = 1.45
         ZStack {
 
             let colorPickerOffset = 10.0
@@ -36,7 +36,7 @@ struct SettingsView: View {
 
                 HStack {
                     SettingsEntry(
-                        textScalar: textScale,
+                        textScalar: viewScaling,
                         headline: "Light mode",
                         description: "Change the application's theme"
                     )
@@ -50,7 +50,7 @@ struct SettingsView: View {
 
                 HStack {
                     SettingsEntry(
-                        textScalar: textScale,
+                        textScalar: viewScaling,
                         headline: "Marquee title",
                         description:
                             "Display your favorite words up on\nthe small screen"
@@ -65,7 +65,7 @@ struct SettingsView: View {
 
                 HStack {
                     SettingsEntry(
-                        textScalar: textScale,
+                        textScalar: viewScaling,
                         headline: "Accent picker",
                         description: "Change the application's main color"
                     )
@@ -85,7 +85,7 @@ struct SettingsView: View {
 
                 HStack {
                     SettingsEntry(
-                        textScalar: textScale,
+                        textScalar: viewScaling,
                         headline: "Donations",
                         description:
                             "Consider donating to support the\ndevelopment of Sage"
