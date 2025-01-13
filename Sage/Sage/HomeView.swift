@@ -14,6 +14,7 @@ struct HomeView: View {
     @State private var animateScale: CGSize = 1.0.toCGSize()
     @State private var search: Bool = false
     @State private var toSearchView = false
+    @State private var toSearchQueryView = false
 
     @State private var favorites: [Favorite] = SampleData.favorites
 
@@ -22,7 +23,7 @@ struct HomeView: View {
         let bottomBarPadding = 16.0
 
         NavigationStack {
-            VStack(spacing: 32) {
+            VStack(spacing: 30) {
                 Spacer()
 
                 Text("Sage").font(.largeTitle)
@@ -55,18 +56,22 @@ struct HomeView: View {
                 .navigationDestination(
                     isPresented: $toSearchView,
                     destination: {
-                        SearchView()
-                            .padding([.top], 16)
-                            .onDisappear {
-                                withAnimation(
-                                    .bouncy(duration: 0.25)
-                                ) {
-                                    animateScale = 1.0.toCGSize()
-                                }
+                        SearchView(
+                            exitOnTap: .constant(false),
+                            toSearchQueryView: $toSearchQueryView
+                        )
+                        .padding([.top], 16)
 
-                                search = false
-                                toSearchView = false
+                        .navigationDestination(
+                            isPresented: $toSearchQueryView,
+                            destination: {
+                                SearchQueryView()
+                                    .padding([.top], 16)
+                                    .onDisappear {
+                                        toSearchQueryView = false
+                                    }
                             }
+                        )
                     })
 
                 Spacer()
@@ -85,6 +90,18 @@ struct HomeView: View {
                         top: 0, leading: 30, bottom: bottomBarPadding,
                         trailing: 30)
                 )
+            }
+            .onAppear {
+                search = false
+                toSearchView = false
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(
+                        .bouncy(duration: 0.25)
+                    ) {
+                        animateScale = 1.0.toCGSize()
+                    }
+                }
             }
         }
     }

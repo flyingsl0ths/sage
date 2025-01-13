@@ -9,8 +9,10 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var word: String = ""
-
     @State private var results: [Query] = SampleData.queryResults
+
+    @Binding var exitOnTap: Bool
+    @Binding var toSearchQueryView: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
@@ -26,6 +28,10 @@ struct SearchView: View {
                         )
                         .padding(.vertical, 4)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .onTapGesture {
+                            toSearchQueryView = true
+                            exitOnTap = false
+                        }
                     }
                 }
                 .padding(.horizontal, 30)
@@ -37,5 +43,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchView(exitOnTap: .constant(false), toSearchQueryView: .constant(false))
 }
