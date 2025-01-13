@@ -28,6 +28,7 @@
 		6DA8DC1F2D0CD22D00CF1284 /* SearchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8DC1E2D0CD22D00CF1284 /* SearchIcon.swift */; };
 		6DA8DC232D0CD4E900CF1284 /* Nums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8DC222D0CD4E300CF1284 /* Nums.swift */; };
 		6DC01DFE2CD019070033C2D8 /* WordCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC01DFD2CD019070033C2D8 /* WordCard.swift */; };
+		6DDDE3EE2D35D226009EC656 /* AccentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDDE3ED2D35D226009EC656 /* AccentPicker.swift */; };
 		6DFDA3B72D0636A80067BB38 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDA3B62D0636A80067BB38 /* SettingsView.swift */; };
 		6DFDA3B92D063F400067BB38 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDA3B82D063F3E0067BB38 /* SampleData.swift */; };
 		6DFDA3CB2D079FFE0067BB38 /* Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFDA3CA2D079FFE0067BB38 /* Toggle.swift */; };
@@ -57,6 +58,7 @@
 		6DA8DC1E2D0CD22D00CF1284 /* SearchIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIcon.swift; sourceTree = "<group>"; };
 		6DA8DC222D0CD4E300CF1284 /* Nums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nums.swift; sourceTree = "<group>"; };
 		6DC01DFD2CD019070033C2D8 /* WordCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCard.swift; sourceTree = "<group>"; };
+		6DDDE3ED2D35D226009EC656 /* AccentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentPicker.swift; sourceTree = "<group>"; };
 		6DFDA3B62D0636A80067BB38 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		6DFDA3B82D063F3E0067BB38 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		6DFDA3CA2D079FFE0067BB38 /* Toggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toggle.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		6D6DB84C2C9A162F0099A07E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6DDDE3ED2D35D226009EC656 /* AccentPicker.swift */,
 				6D6D88A12CFD3DE600CC56CE /* SettingsButton.swift */,
 				6D3DAC512CC62D8A005A3EBA /* SearchView.swift */,
 				6D6D889F2CFD3AF700CC56CE /* FavoritesButton.swift */,
@@ -233,6 +236,7 @@
 				6D6D88802CF6A8F600CC56CE /* Favorite.swift in Sources */,
 				6D45AB212CB3D0150021B5B4 /* HexColor.swift in Sources */,
 				6DC01DFE2CD019070033C2D8 /* WordCard.swift in Sources */,
+				6DDDE3EE2D35D226009EC656 /* AccentPicker.swift in Sources */,
 				6D45AB232CB3DD5D0021B5B4 /* SentencesView.swift in Sources */,
 				6D6D88A02CFD3AFB00CC56CE /* FavoritesButton.swift in Sources */,
 				6D6DB84E2C9A163E0099A07E /* SearchField.swift in Sources */,
