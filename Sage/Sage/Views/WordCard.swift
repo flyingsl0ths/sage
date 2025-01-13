@@ -25,7 +25,7 @@ struct WordCard: View {
         let subTitle: CGFloat = 16
         let buttonFontSize: CGFloat = 12
 
-        VStack(spacing: 60) {
+        VStack(spacing: 80) {
             VStack(spacing: 8) {
                 Text(query.word)
                     .font(.system(size: title))
@@ -54,33 +54,31 @@ struct WordCard: View {
 
                 HStack(spacing: 24) {
                     ForEach(word.synonyms, id: \.self) { synonym in
-                        Button(action: {
-                            UIPasteboard.general.string = synonym
-                            copiedToClipboard.toggle()
-
-                            DispatchQueue.main.asyncAfter(
-                                deadline: .now() + 0.85
-                            ) {
+                        Text(synonym)
+                            .font(.system(size: buttonFontSize))
+                            .foregroundStyle(.black)
+                            .padding(12)
+                            .lineLimit(1)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                            .onTapGesture {
+                                UIPasteboard.general.string = synonym
                                 copiedToClipboard.toggle()
+
+                                DispatchQueue.main.asyncAfter(
+                                    deadline: .now() + 0.85
+                                ) {
+                                    copiedToClipboard.toggle()
+                                }
                             }
-                        }) {
-                            Text(synonym)
-                                .font(.system(size: buttonFontSize))
-                                .foregroundStyle(.black)
-                                .padding(12)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 40)
-                                        .stroke(Color.black, lineWidth: 1)
-                                )
-                        }
+
                     }
                 }
                 .frame(
-                    maxWidth: .infinity, alignment: .leading)
-
-                Text("...")
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    maxWidth: .infinity,
+                    alignment: .leading)
             }
 
         }.background(
@@ -118,18 +116,21 @@ struct WordCard: View {
         let next =
             currentIndex + 1 == total - 1
             ? 0 : (currentIndex + 1) % total
-        print("Right: \(next)")
+
         onSwiped(next)
+
         return next
     }
 
     func onSwipeLeft() -> Int {
         var next = (currentIndex - 1) % total
+
         if next < 0 {
             next = total - 2
         }
-        print("Left: \(next)")
+
         onSwiped(next)
+
         return next
     }
 }
