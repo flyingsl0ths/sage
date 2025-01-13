@@ -130,6 +130,7 @@ struct FavoritesView: View {
                     })
             }
         }
+        .padding(.vertical, 12)
         .frame(maxHeight: .infinity)
         .zIndex(0)
         .onAppear {
