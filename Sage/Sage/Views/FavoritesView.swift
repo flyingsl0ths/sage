@@ -11,8 +11,11 @@ struct FavoritesView: View {
     @State private var currentIndex = 0
     @State private var showSearchSheet = false
     @State private var toSearchQueryView = false
+    @State private var toWordView = false
     @State private var showCopiedToClipboardPopup = false
-    @Binding var favorites: [Favorite]
+    @Binding var query: String
+    @Binding var lastQuery: Word
+    @Binding var favorites: [Word]
 
     var body: some View {
         VStack {
@@ -54,6 +57,11 @@ struct FavoritesView: View {
                                 showCopiedToClipboardPopup ? 0.2 : 0
                             )))
 
+            let swapCard = {
+                (next: Int) in
+                favorites.swapAt(favorites.count - 1, next)
+            }
+
             ZStack {
                 ForEach(favorites, id: \.self) { favorite in
                     WordCard(
@@ -62,13 +70,15 @@ struct FavoritesView: View {
                         currentIndex: $currentIndex,
                         copiedToClipboard: $showCopiedToClipboardPopup
                     ) { updated in
-                        swapCard(next: updated)
+                        swapCard(updated)
                     }
                     .padding(.horizontal, 66)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            let iconSize = 28.0
 
             HStack(spacing: 24) {
                 Button(action: {}) {
@@ -77,11 +87,7 @@ struct FavoritesView: View {
                             sentences: SampleData.baseSentences,
                             word: "Hedonism")
                     }) {
-                        Image(systemName: "text.alignleft")
-                            .resizable()
-                            .foregroundStyle(.black)
-                            .frame(width: 28, height: 28)
-                            .aspectRatio(contentMode: .fit)
+                        Icon(iconName: "text.alignleft", iconSize: iconSize)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 16)
                             .overlay(
@@ -92,12 +98,8 @@ struct FavoritesView: View {
                     }
                 }
 
-                Button(action: {}) {
-                    Image(systemName: "waveform")
-                        .resizable()
-                        .foregroundStyle(.black)
-                        .frame(width: 28, height: 28)
-                        .aspectRatio(contentMode: .fit)
+                Button(action: { toWordView = true }) {
+                    Icon(iconName: "book", iconSize: iconSize)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 16)
                         .overlay(
@@ -107,11 +109,7 @@ struct FavoritesView: View {
                 }
 
                 Button(action: { showSearchSheet = true }) {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .foregroundStyle(.black)
-                        .frame(width: 28, height: 28)
-                        .aspectRatio(contentMode: .fit)
+                    Icon(iconName: "plus", iconSize: iconSize)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 16)
                         .overlay(
@@ -122,39 +120,58 @@ struct FavoritesView: View {
                     isPresented: $showSearchSheet,
                     content: {
                         SearchView(
+                            query: $query,
                             exitOnTap: $showSearchSheet,
-                            toSearchQueryView: $toSearchQueryView
+                            toSearchQueryView: $toSearchQueryView,
+                            lastQuery: $lastQuery,
+                            favorites: $favorites
                         )
                         .padding(.vertical, 48)
                         .presentationDetents([.medium, .large])
                     })
             }
         }
+
+        .navigationDestination(
+            isPresented: $toWordView,
+            destination: {
+                WordView(
+                    word: favorites[currentIndex],
+                    canAddToFavorites: false,
+                    favorites: $favorites
+                )
+                .padding([.top], 16)
+                .onDisappear {
+                    toWordView = false
+                }
+            }
+        )
+        .navigationDestination(
+            isPresented: $toSearchQueryView,
+            destination: {
+                WordView(
+                    word: lastQuery,
+                    canAddToFavorites: !favorites.contains(lastQuery),
+                    favorites: $favorites
+                )
+                .padding([.top], 16)
+                .onDisappear {
+                    toSearchQueryView = false
+                    showSearchSheet = true
+                }
+            }
+        )
         .padding(.vertical, 12)
         .frame(maxHeight: .infinity)
         .zIndex(0)
         .onAppear {
             currentIndex = favorites.count - 1
         }
-        .navigationDestination(
-            isPresented: $toSearchQueryView,
-            destination: {
-                SearchQueryView()
-                    .onDisappear {
-                        toSearchQueryView = false
-                        showSearchSheet = true
-                    }
-            }
-        )
     }
-
-    private func swapCard(next: Int) {
-        favorites.swapAt(favorites.count - 1, next)
-    }
-
 }
 
 #Preview {
     FavoritesView(
+        query: .constant(""), lastQuery: .constant(SampleData.favorite),
         favorites: .constant(SampleData.favorites))
 }

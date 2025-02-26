@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var selectedColor: Color = .accentColor
     @State private var showColorPicker = false
+    @Binding var settings: Settings
 
     var body: some View {
         let viewScaling = 1.45
@@ -19,10 +19,10 @@ struct SettingsView: View {
 
             AccentPicker(
                 showColorPicker: $showColorPicker,
-                selectedColor: $selectedColor
+                selectedColor: $settings.accentColor
             )
             .offset(y: showColorPicker ? colorPickerOffset : -colorPickerOffset)
-            .opacity(showColorPicker ? 1.0 : -1.0)
+            .opacity(showColorPicker ? 1.1 : -1.0)
             .zIndex(1)
 
             VStack(spacing: 32) {
@@ -31,7 +31,6 @@ struct SettingsView: View {
                 )
 
                 let toggleScalar: CGFloat = 1.4
-                let toggle: (Bool) -> Void = { _ in }
                 let toggleOffset: CGFloat = 5
 
                 HStack {
@@ -42,8 +41,8 @@ struct SettingsView: View {
                     )
                     Toggle(
                         scalar: toggleScalar,
-                        handleOn: { toggle(true) },
-                        handleOff: { toggle(false) }
+                        handleOn: { settings.mode = .light },
+                        handleOff: { settings.mode = .dark }
                     )
                     .offset(y: -toggleOffset)
                 }
@@ -57,8 +56,12 @@ struct SettingsView: View {
                     )
                     Toggle(
                         scalar: toggleScalar,
-                        handleOn: { toggle(true) },
-                        handleOff: { toggle(false) }
+                        handleOn: {
+                            settings.marqueeAnimation.toggle()
+                        },
+                        handleOff: {
+                            settings.marqueeAnimation.toggle()
+                        }
                     )
                     .offset(y: -toggleOffset)
                 }
@@ -120,5 +123,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(settings: .constant(Settings()))
 }

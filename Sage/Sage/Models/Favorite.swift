@@ -6,6 +6,5 @@
 //
 
 struct Favorite : Hashable {
-    let query: Query
-    let synonyms: [String]
+    let query: Word
 }

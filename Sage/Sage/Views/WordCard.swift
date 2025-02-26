@@ -11,7 +11,7 @@ struct WordCard: View {
     @State private var offset = CGSize.zero
     @State private var rotation: Double = 0
 
-    let word: Favorite
+    let word: Word
     let total: Int
 
     @Binding var currentIndex: Int
@@ -19,27 +19,25 @@ struct WordCard: View {
     let onSwiped: (_: Int) -> Void
 
     var body: some View {
-        let query = word.query
-
         let title: CGFloat = 34
         let subTitle: CGFloat = 16
         let buttonFontSize: CGFloat = 12
 
         VStack(spacing: 80) {
             VStack(spacing: 8) {
-                Text(query.word)
+                Text(word.word)
                     .font(.system(size: title))
                     .frame(
                         maxWidth: .infinity, alignment: .leading)
 
-                Text(query.pronounciation)
+                Text(word.pronounciation)
                     .opacity(0.7)
                     .font(.system(size: subTitle))
                     .frame(
                         maxWidth: .infinity, alignment: .leading)
             }
 
-            Text(query.definition)
+            Text(word.definition)
                 .opacity(0.7)
                 .font(.system(size: subTitle))
                 .lineLimit(3)
@@ -83,7 +81,7 @@ struct WordCard: View {
 
         }.background(
             RoundedRectangle(cornerRadius: 30).fill(
-                Color(hex: Palette.fromString(query.word))
+                Color(hex: Palette.fromString(word.word))
             )
             .padding(-40)
         )

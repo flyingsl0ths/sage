@@ -13,7 +13,9 @@ struct FavoritesButton: View {
     @State private var animateScale: CGSize = .zero
     @State private var toFavoritesPage: Bool = false
 
-    @Binding var favorites: [Favorite]
+    @Binding var favorites: [Word]
+    @Binding var query: String
+    @Binding var lastQuery: Word
     var size: CGFloat = 100
 
     var body: some View {
@@ -31,9 +33,11 @@ struct FavoritesButton: View {
                         isPresented: $toFavoritesPage,
                         destination: {
                             FavoritesView(
-                                favorites:
-                                    $favorites
-                            ).onAppear {
+                                query: $query,
+                                lastQuery: $lastQuery,
+                                favorites: $favorites
+                            )
+                            .onAppear {
                                 isLiked = false
                                 animateScale = .zero
                             }
@@ -79,5 +83,8 @@ struct FavoritesButton: View {
 
 #Preview {
     FavoritesButton(
-        favorites: .constant(SampleData.favorites))
+        favorites: .constant(SampleData.favorites),
+        query: .constant(""),
+        lastQuery: .constant(SampleData.queryResults[0])
+    )
 }

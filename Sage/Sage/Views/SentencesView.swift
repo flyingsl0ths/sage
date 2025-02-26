@@ -10,19 +10,12 @@ import SwiftUI
 struct SentencesView: View {
     private let textSize: CGFloat = 14.0
 
-    static private let tenses = [
-        "BASE",
-        "PRESENT I",
-        "PAST I",
-        "PRESENT II",
-        "PAST II",
-        "FUTURE",
-    ]
+    static private let partsOfSpeech = SampleData.partsOfSpeech
 
     var sentences: [String]
     var word: String
 
-    @State private var activeTense: String = "BASE"
+    @State private var activeTense: String = SampleData.partsOfSpeech[0]
 
     var body: some View {
         VStack(spacing: 50) {
@@ -34,7 +27,8 @@ struct SentencesView: View {
             HStack(spacing: 4) {
                 ScrollView {
                     VStack(spacing: 70) {
-                        ForEach(SentencesView.tenses, id: \.hash) { tense in
+                        ForEach(SentencesView.partsOfSpeech, id: \.hash) {
+                            tense in
                             Button(action: {
                                 activeTense = tense
                             }) {

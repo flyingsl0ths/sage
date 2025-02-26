@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private var word: String = ""
-    @State private var results: [Query] = SampleData.queryResults
-
+    @Binding var query: String
     @Binding var exitOnTap: Bool
     @Binding var toSearchQueryView: Bool
+    @Binding var lastQuery: Word
+    @Binding var favorites: [Word]
+    @State private var results: [Word] = SampleData.queryResults
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
-            SearchBar(searchQuery: $word)
+            SearchBar(searchQuery: $query)
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    ForEach(results, id: \.word.hash) { result in
+                    ForEach(results, id: \.self) { result in
                         SearchQuery(
                             word: result.word,
                             pronounciation: result.pronounciation,
@@ -31,6 +32,7 @@ struct SearchView: View {
                         .onTapGesture {
                             toSearchQueryView = true
                             exitOnTap = false
+                            lastQuery = result
                         }
                     }
                 }
@@ -38,10 +40,17 @@ struct SearchView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-
     }
 }
 
 #Preview {
-    SearchView(exitOnTap: .constant(false), toSearchQueryView: .constant(false))
+    SearchView(
+        query: .constant("hello"),
+        exitOnTap: .constant(false),
+        toSearchQueryView: .constant(false),
+        lastQuery: .constant(
+            SampleData.queryResults[0]
+        ),
+        favorites: .constant(SampleData.favorites)
+    )
 }

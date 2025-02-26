@@ -11,46 +11,49 @@ struct SettingsButton: View {
     static private let rotationAnimationDuration: Double = 0.55
 
     let symbolSize: CGFloat
-    @State private var isRotating = false
-    @State private var rotationAngle: Double = 0.0
-    @State private var toSettingsPage: Bool = false
+    @Binding var isSettingsButtonRotating: Bool
+    @Binding var settingsButtonRotationAngle: Double
+    @Binding var toSettingsPage: Bool
+    @Binding var settings: Settings
 
     var body: some View {
         ZStack {
-            if isRotating {
+            if isSettingsButtonRotating {
                 Image(systemName: "gearshape.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: symbolSize, height: symbolSize)
-                    .rotationEffect(.degrees(rotationAngle))
-                    .navigationDestination(
-                        isPresented: $toSettingsPage,
-                        destination: {
-                            SettingsView().onAppear {
-                                isRotating = false
-                                rotationAngle = 0
-                            }
-                        }
-                    )
+                    .rotationEffect(.degrees(settingsButtonRotationAngle))
             } else {
                 Image(systemName: "gearshape")
                     .resizable()
                     .scaledToFit()
                     .frame(width: symbolSize, height: symbolSize)
                     .transition(.opacity)
-                    .rotationEffect(.degrees(rotationAngle))
+                    .rotationEffect(.degrees(settingsButtonRotationAngle))
             }
         }
+        .navigationDestination(
+            isPresented: $toSettingsPage,
+            destination: {
+                SettingsView(settings: $settings)
+                    .onAppear {
+                        isSettingsButtonRotating = false
+                        settingsButtonRotationAngle = 0
+                    }
+            }
+        )
         .onTapGesture {
             withAnimation(.easeInOut(duration: 0.5)) {
-                isRotating.toggle()
+                isSettingsButtonRotating.toggle()
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     withAnimation(
                         .easeInOut(
                             duration: SettingsButton.rotationAnimationDuration)
                     ) {
-                        rotationAngle = isRotating ? 360 : 0
+                        settingsButtonRotationAngle =
+                            isSettingsButtonRotating ? 360 : 0
                     }
 
                     DispatchQueue.main.asyncAfter(
@@ -68,5 +71,9 @@ struct SettingsButton: View {
 }
 
 #Preview {
-    SettingsButton(symbolSize: 32)
+    SettingsButton(
+        symbolSize: 32, isSettingsButtonRotating: .constant(false),
+        settingsButtonRotationAngle: .constant(0),
+        toSettingsPage: .constant(false), settings: .constant(Settings())
+    )
 }

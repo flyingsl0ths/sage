@@ -10,13 +10,14 @@ import SwiftUI
 struct HomeView: View {
     static private var springAnimationDuration: Double = 0.2825
 
-    @State private var searchQuery: String = ""
-    @State private var animateScale: CGSize = 1.0.toCGSize()
-    @State private var search: Bool = false
-    @State private var toSearchView = false
-    @State private var toSearchQueryView = false
-
-    @State private var favorites: [Favorite] = SampleData.favorites
+    @State var animateScale: CGSize = 1.0.toCGSize()
+    @State var search: Bool = false
+    @State var toSearchView = false
+    @State var toSearchQueryView = false
+    @State var toSettingsPage = false
+    @State var isSettingsButtonRotating = false
+    @State var settingsButtonRotationAngle: Double = 0.0
+    @State var user: User = User()
 
     var body: some View {
         let symbolSize: CGFloat = 24
@@ -29,7 +30,11 @@ struct HomeView: View {
                 Text("Sage").font(.largeTitle)
                     .scaleEffect(animateScale)
 
-                SearchBar(searchQuery: $searchQuery) { _ in
+                SearchBar(searchQuery: $user.query) { query in
+                    if query.wrappedValue.isEmpty {
+                        return
+                    }
+
                     withAnimation {
                         search = true
                     }
@@ -57,32 +62,48 @@ struct HomeView: View {
                     isPresented: $toSearchView,
                     destination: {
                         SearchView(
+                            query: $user.query,
                             exitOnTap: .constant(false),
-                            toSearchQueryView: $toSearchQueryView
+                            toSearchQueryView: $toSearchQueryView,
+                            lastQuery: $user.lastQuery,
+                            favorites: $user.favorites
                         )
-                        .padding([.top], 16)
-
                         .navigationDestination(
                             isPresented: $toSearchQueryView,
                             destination: {
-                                SearchQueryView()
-                                    .padding([.top], 16)
-                                    .onDisappear {
-                                        toSearchQueryView = false
-                                    }
+                                WordView(
+                                    word: user.lastQuery,
+                                    canAddToFavorites: !user.favorites.contains(
+                                        user.lastQuery),
+                                    favorites: .constant(user.favorites)
+                                )
+                                .padding([.top], 16)
+                                .onDisappear {
+                                    toSearchQueryView = false
+                                }
                             }
                         )
+                        .padding([.top], 16)
                     })
 
                 Spacer()
 
                 HStack {
-                    SettingsButton(symbolSize: symbolSize)
-
+                    SettingsButton(
+                        symbolSize: symbolSize,
+                        isSettingsButtonRotating:
+                            $isSettingsButtonRotating,
+                        settingsButtonRotationAngle:
+                            $settingsButtonRotationAngle,
+                        toSettingsPage: $toSettingsPage,
+                        settings: $user.settings
+                    )
                     Spacer()
 
                     FavoritesButton(
-                        favorites: $favorites,
+                        favorites: $user.favorites,
+                        query: $user.query,
+                        lastQuery: $user.lastQuery,
                         size: symbolSize
                     )
                 }.padding(

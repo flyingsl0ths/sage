@@ -35,8 +35,15 @@ struct Toggle: View {
                 .offset(x: xOffset)
                 .onTapGesture {
                     isOn.toggle()
+
                     withAnimation(.easeInOut(duration: 0.5)) {
                         xOffset = isOn ? -offset : offset
+                    }
+
+                    if isOn {
+                        handleOn()
+                    } else {
+                        handleOff()
                     }
                 }
                 .zIndex(1)

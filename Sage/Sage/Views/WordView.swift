@@ -7,31 +7,41 @@
 
 import SwiftUI
 
-struct SearchQueryView: View {
+struct WordView: View {
     static private var volumeIconAnimationDuration = 0.35
+
+    var word: Word
+    var canAddToFavorites: Bool = false
+    @Binding var favorites: [Word]
     @State private var speechIconScale: Double = 1.0
+    @State private var favoritesIconIconScale: Double = 1.0
     @State private var isSpeechIconTouched = false
 
     var body: some View {
         VStack(spacing: 0) {
-            Text("An excited state of joy; a feeling of intense happiness.")
+            Carousel(items: word.synonyms)
+
+            Spacer()
+
+            Text(word.definition)
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
 
             Spacer()
 
-            Carousel(items: SampleData.baseSentences)
-
-            Spacer()
+            if !word.antonyms.isEmpty {
+                Carousel(items: word.antonyms)
+                    .padding(.bottom, 20)
+            }
 
             VStack(spacing: 24) {
-                Text("Euphoria")
+                Text(word.word)
                     .font(.system(size: 62))
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 HStack(spacing: 12) {
-                    Text("/juːˈfɔːɹi.ə/")
+                    Text(word.pronounciation)
                         .font(.system(size: 24))
 
                     Image(systemName: "speaker.wave.2")
@@ -44,7 +54,7 @@ struct SearchQueryView: View {
                             isSpeechIconTouched = true
                             withAnimation(
                                 .spring(
-                                    response: SearchQueryView
+                                    response: WordView
                                         .volumeIconAnimationDuration,
                                     dampingFraction: 0.15)
                             ) {
@@ -53,7 +63,7 @@ struct SearchQueryView: View {
 
                             DispatchQueue.main.asyncAfter(
                                 deadline: .now()
-                                    + SearchQueryView
+                                    + WordView
                                     .volumeIconAnimationDuration
                             ) {
                                 isSpeechIconTouched = false
@@ -62,26 +72,29 @@ struct SearchQueryView: View {
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-
-                Text(
-                    """
-                    late 17th century (denoting well-being produced in a sick person by the use of drugs): modern Latin, from Greek, from euphoros ‘borne well, healthy’, from eu ‘well’ + pherein ‘to bear’.
-                    """
-                )
-                .font(.system(size: 16))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .lineLimit(5)
             }
             .padding(.bottom, 24)
 
             RoundedRectangle(cornerRadius: 2)
                 .frame(height: 4)
         }
+        .toolbar(content: {
+            Icon(iconName: "plus.circle").frame(
+                maxWidth: .infinity, alignment: .topTrailing
+            )
+            .opacity(canAddToFavorites ? 1.0 : 0.5)
+            .onTapGesture {
+                if canAddToFavorites {
+                    favorites.insert(word, at: 0)
+                }
+            }
+        })
         .padding(.vertical, 18)
         .padding(.horizontal, 30)
     }
 }
 
 #Preview {
-    SearchQueryView()
+    WordView(
+        word: SampleData.favorite, favorites: .constant(SampleData.favorites))
 }

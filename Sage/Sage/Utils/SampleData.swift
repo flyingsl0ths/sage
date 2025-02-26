@@ -6,126 +6,95 @@
 //
 
 struct SampleData {
-    static let queryResults: [Query] = [
-        Query(
-            word: "ephemeral", pronounciation: "ih-FEM-er-uhl",
-            definition: "Lasting a very short time."),
-        Query(
-            word: "epicenter", pronounciation: "EP-uh-sen-ter",
-            definition:
-                "The point on the Earth's surface directly above the focus of an earthquake."
+    static let partsOfSpeech = [
+        "NOUN",
+        "VERB",
+        "ADJECTIVE",
+    ]
+
+    static let queryResults: [Word] = [
+        Word(
+            word: "ephemeral",
+            pronounciation: "ih-FEM-er-uhl",
+            definition: "Lasting a very short time.",
+            synonyms: ["transient", "fleeting", "momentary"]
         ),
-        Query(
-            word: "epitome", pronounciation: "ih-PIT-uh-mee",
-            definition: "A perfect example of a quality or type."),
-        Query(
-            word: "epigraph", pronounciation: "EP-i-graf",
+        Word(
+            word: "epicenter",
+            pronounciation: "EP-uh-sen-ter",
             definition:
-                "A short quotation at the beginning of a book or chapter."),
-        Query(
-            word: "epiphany", pronounciation: "ih-PIF-uh-nee",
-            definition: "A sudden realization or insight."),
-        Query(
-            word: "epidermis", pronounciation: "ep-i-DUR-mis",
-            definition: "The outer layer of skin."),
-        Query(
-            word: "epitaph", pronounciation: "EP-i-taf",
-            definition:
-                "A phrase or statement written in memory of someone who has died, especially on a tombstone."
+                "The point on the Earth's surface directly above the focus of an earthquake.",
+            synonyms: ["focus", "nucleus", "core"]
         ),
-        Query(
-            word: "epistolary", pronounciation: "ih-PIS-tuh-ler-ee",
-            definition: "Relating to the writing of letters."),
-        Query(
-            word: "epoxide", pronounciation: "EP-ok-sahyd",
-            definition: "A cyclic ether with a three-atom ring."),
-        Query(
-            word: "epicurean", pronounciation: "ep-i-KYOOR-ee-uhn",
+        Word(
+            word: "epitome",
+            pronounciation: "ih-PIT-uh-mee",
+            definition: "A perfect example of a quality or type.",
+            synonyms: ["embodiment", "paragon", "essence"]
+        ),
+        Word(
+            word: "epigraph",
+            pronounciation: "EP-i-graf",
             definition:
-                "Devoted to the pursuit of pleasure, especially in food and comfort."
+                "A short quotation at the beginning of a book or chapter.",
+            synonyms: ["inscription", "engraving", "motto"]
+        ),
+        Word(
+            word: "epiphany",
+            pronounciation: "ih-PIF-uh-nee",
+            definition: "A sudden realization or insight.",
+            synonyms: ["revelation", "insight", "realization"]
+        ),
+        Word(
+            word: "epidermis",
+            pronounciation: "ep-i-DUR-mis",
+            definition: "The outer layer of skin.",
+            synonyms: ["skin", "cuticle", "hide"]
+        ),
+        Word(
+            word: "epitaph",
+            pronounciation: "EP-i-taf",
+            definition:
+                "A phrase or statement written in memory of someone who has died, especially on a tombstone.",
+            synonyms: ["inscription", "legend", "commemoration"]
+        ),
+        Word(
+            word: "epistolary",
+            pronounciation: "ih-PIS-tuh-ler-ee",
+            definition: "Relating to the writing of letters.",
+            synonyms: ["written", "correspondent", "lettered"]
+        ),
+        Word(
+            word: "epoxide",
+            pronounciation: "EP-ok-sahyd",
+            definition: "A cyclic ether with a three-atom ring.",
+            synonyms: ["oxirane", "ether", "epoxy"]
+        ),
+        Word(
+            word: "epicurean",
+            pronounciation: "ep-i-KYOOR-ee-uhn",
+            definition:
+                "Devoted to the pursuit of pleasure, especially in food and comfort.",
+            synonyms: ["hedonistic", "luxurious", "sensual"]
         ),
     ]
 
-    static let favorites: [Favorite] = [
-        Favorite(
-            query: Query(
-                word: "Ephemeral",
-                pronounciation:
-                    "ih-FEM-er-uhl",
-                definition:
-                    "Lasting for a very short time"
-            ),
-            synonyms: [
-                "fleeting", "transient",
-                "short-lived",
-            ]
-        ),
-        Favorite(
-            query: Query(
-                word: "Ineffable",
-                pronounciation:
-                    "in-EF-uh-buhl",
-                definition:
-                    "Too great or extreme to be expressed in words"
-            ),
-            synonyms: [
-                "indescribable",
-                "unspeakable",
-                "inexpressible",
-            ]
-        ),
-        Favorite(
-            query: Query(
-                word: "Serendipity",
-                pronounciation:
-                    "seh-ren-DIP-ih-tee",
-                definition:
-                    "The occurrence of events by chance in a happy or beneficial way"
-            ),
-            synonyms: [
-                "fluke", "luck",
-                "coincidence",
-            ]
-        ),
-        Favorite(
-            query: Query(
-                word: "Ebullient",
-                pronounciation:
-                    "ih-BUHL-yuhnt",
-                definition:
-                    "Full of energy, enthusiasm, and cheerfulness"
-            ),
-            synonyms: [
-                "exuberant", "elated",
-                "vivacious",
-            ]
-        ),
-        Favorite(
-            query: Query(
-                word: "Luminous",
-                pronounciation:
-                    "LOO-muh-nuhs",
-                definition:
-                    "Full of or shedding light; bright or shining, especially in the dark"
-            ),
-            synonyms: [
-                "radiant", "brilliant",
-                "shining",
-            ]
-        ),
-    ]
+    static let favorites: [Word] = Self.queryResults
 
-    static let favorite: Favorite = Favorite(
-        query: Query(
+    static let favorite: Word =
+        Word(
             word: "Serendipity",
             pronounciation: "seh-ren-DIP-uh-tee",
             definition:
-                "The occurrence of events by chance in a happy or beneficial way."
-        ),
-        synonyms: [
-            "fluke", "fortune", "luck", "coincidence", "happy accident",
-        ]
-    )
+                "The occurrence of events by chance in a happy or beneficial way.",
+            synonyms: [
+                "fluke", "fortune", "luck", "coincidence", "happy accident",
+            ],
+            antonyms: [
+                "Murphy's law",
+                "perfect storm",
+            ]
+        )
 
     static let baseSentences: [String] = [
         "Hedonism promotes the pursuit of pleasure as the highest good.",
