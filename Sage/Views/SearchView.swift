@@ -13,31 +13,45 @@ struct SearchView: View {
     @Binding var toSearchQueryView: Bool
     @Binding var lastQuery: Word
     @Binding var favorites: [Word]
-    @State private var results: [Word] = SampleData.queryResults
+    @State private var results: [Word] = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
             SearchBar(searchQuery: $query)
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    ForEach(results, id: \.self) { result in
-                        SearchQuery(
-                            word: result.word,
-                            pronounciation: result.pronounciation,
-                            definition: result.definition
-                        )
-                        .padding(.vertical, 4)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .onTapGesture {
-                            toSearchQueryView = true
-                            exitOnTap = false
-                            lastQuery = result
+            ZStack {
+                if results.isEmpty {
+                    NoResultsAnimation()
+                        .zIndex(1.0)
+                        .offset(y: -25)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .center)
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            ForEach(results, id: \.self) { result in
+                                SearchQuery(
+                                    word: result.word,
+                                    pronounciation: result.pronounciation,
+                                    definition: result.definition
+                                )
+                                .padding(.vertical, 4)
+                                .onTapGesture {
+                                    toSearchQueryView = true
+                                    exitOnTap = false
+                                    lastQuery = result
+                                }
+                            }
                         }
+                        .padding(.horizontal, 30)
                     }
                 }
-                .padding(.horizontal, 30)
             }
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
