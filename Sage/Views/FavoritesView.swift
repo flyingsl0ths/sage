@@ -11,6 +11,7 @@ struct FavoritesView: View {
     @State private var currentIndex = 0
     @State private var showSearchSheet = false
     @State private var toSearchQueryView = false
+    @State private var toSentencesView = false
     @State private var toWordView = false
     @State private var showCopiedToClipboardPopup = false
     @Binding var query: String
@@ -76,26 +77,22 @@ struct FavoritesView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .onAppear {
+                currentIndex = favorites.count - 1
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             let iconSize = 28.0
 
             HStack(spacing: 24) {
-                Button(action: {}) {
-                    NavigationLink(destination: {
-                        SentencesView(
-                            sentences: SampleData.baseSentences,
-                            word: "Hedonism")
-                    }) {
-                        Icon(iconName: "text.alignleft", iconSize: iconSize)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
-
-                    }
+                Button(action: { toSentencesView = true }) {
+                    Icon(iconName: "text.alignleft", iconSize: iconSize)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 16)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
                 }
 
                 Button(action: { toWordView = true }) {
@@ -116,29 +113,29 @@ struct FavoritesView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.black, lineWidth: 1)
                         )
-                }.sheet(
-                    isPresented: $showSearchSheet,
-                    content: {
-                        SearchView(
-                            query: $query,
-                            exitOnTap: $showSearchSheet,
-                            toSearchQueryView: $toSearchQueryView,
-                            lastQuery: $lastQuery,
-                            favorites: $favorites
-                        )
-                        .padding(.vertical, 48)
-                        .presentationDetents([.medium, .large])
-                    })
+                }
             }
         }
-
+        .navigationDestination(
+            isPresented: $toSentencesView,
+            destination: {
+                let word = favorites.last!
+                SentencesView(
+                    word: word.word, sentences: word.sentences,
+                    tenses: word.sentences.keys.compactMap { $0 }
+                )
+                .onDisappear {
+                    toSentencesView = false
+                }
+            }
+        )
         .navigationDestination(
             isPresented: $toWordView,
             destination: {
                 WordView(
-                    word: favorites[currentIndex],
+                    word: favorites.last!,
                     canAddToFavorites: false,
-                    favorites: $favorites
+                    favorites: .constant(favorites)
                 )
                 .padding([.top], 16)
                 .onDisappear {
@@ -161,12 +158,23 @@ struct FavoritesView: View {
                 }
             }
         )
+        .sheet(
+            isPresented: $showSearchSheet,
+            content: {
+                SearchView(
+                    query: $query,
+                    exitOnTap: $showSearchSheet,
+                    toSearchQueryView: $toSearchQueryView,
+                    lastQuery: $lastQuery,
+                    favorites: $favorites
+                )
+                .padding(.vertical, 48)
+                .presentationDetents([.medium, .large])
+            }
+        )
         .padding(.vertical, 12)
         .frame(maxHeight: .infinity)
         .zIndex(0)
-        .onAppear {
-            currentIndex = favorites.count - 1
-        }
     }
 }
 

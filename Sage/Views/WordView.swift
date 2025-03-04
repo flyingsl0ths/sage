@@ -16,10 +16,13 @@ struct WordView: View {
     @State private var speechIconScale: Double = 1.0
     @State private var favoritesIconIconScale: Double = 1.0
     @State private var isSpeechIconTouched = false
+    @StateObject private var speechSynthesizer = SpeechSynthesizer()
 
     var body: some View {
         VStack(spacing: 0) {
-            Carousel(items: word.synonyms)
+            if !word.synonyms.isEmpty {
+                Carousel(items: word.synonyms)
+            }
 
             Spacer()
 
@@ -52,6 +55,7 @@ struct WordView: View {
                         .scaleEffect(speechIconScale.toCGSize())
                         .onTapGesture {
                             isSpeechIconTouched = true
+
                             withAnimation(
                                 .spring(
                                     response: WordView
@@ -68,6 +72,7 @@ struct WordView: View {
                             ) {
                                 isSpeechIconTouched = false
                                 speechIconScale = 1.0
+                                speechSynthesizer.speak(word.word)
                             }
                         }
                 }
