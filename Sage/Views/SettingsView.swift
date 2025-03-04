@@ -50,25 +50,6 @@ struct SettingsView: View {
                 HStack {
                     SettingsEntry(
                         textScalar: viewScaling,
-                        headline: "Marquee title",
-                        description:
-                            "Display your favorite words up on\nthe small screen"
-                    )
-                    Toggle(
-                        scalar: toggleScalar,
-                        handleOn: {
-                            settings.marqueeAnimation.toggle()
-                        },
-                        handleOff: {
-                            settings.marqueeAnimation.toggle()
-                        }
-                    )
-                    .offset(y: -toggleOffset)
-                }
-
-                HStack {
-                    SettingsEntry(
-                        textScalar: viewScaling,
                         headline: "Accent picker",
                         description: "Change the application's main color"
                     )

@@ -13,6 +13,5 @@ enum Mode: Int {
 
 struct Settings {
     var mode: Mode = .light
-    var marqueeAnimation: Bool = false
     var accentColor = Color.accentColor
 }
