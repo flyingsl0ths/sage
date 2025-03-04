@@ -65,5 +65,5 @@ struct Carousel: View {
 }
 
 #Preview {
-    Carousel(items: SampleData.baseSentences)
+    Carousel(items: SampleData.favorite.synonyms)
 }

@@ -11,6 +11,8 @@ struct Word: Hashable, Equatable {
     var definition: String = ""
     var synonyms: [String] = []
     var antonyms: [String] = []
+    var sentences: [String: [String]] = [:]
+
     var isEmpty: Bool {
         word.isEmpty && pronounciation.isEmpty && definition.isEmpty
             && synonyms.isEmpty

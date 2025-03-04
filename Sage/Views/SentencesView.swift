@@ -10,12 +10,12 @@ import SwiftUI
 struct SentencesView: View {
     private let textSize: CGFloat = 14.0
 
-    static private let partsOfSpeech = SampleData.partsOfSpeech
-
-    var sentences: [String]
     var word: String
+    var sentences: [String: [String]]
+    var tenses: [String] = []
 
-    @State private var activeTense: String = SampleData.partsOfSpeech[0]
+    @State private var activeTense: String = ""
+    @State private var text: [String] = []
 
     var body: some View {
         VStack(spacing: 50) {
@@ -27,10 +27,11 @@ struct SentencesView: View {
             HStack(spacing: 4) {
                 ScrollView {
                     VStack(spacing: 70) {
-                        ForEach(SentencesView.partsOfSpeech, id: \.hash) {
+                        ForEach(sentences.keys.compactMap { $0 }, id: \.hash) {
                             tense in
                             Button(action: {
                                 activeTense = tense
+                                text = sentences[activeTense]!.compactMap { $0 }
                             }) {
                                 VStack {
                                     Text(tense)
@@ -60,7 +61,11 @@ struct SentencesView: View {
 
                 ScrollView {
                     VStack(spacing: 35) {
-                        ForEach(sentences, id: \.hash) { sentence in
+                        ForEach(
+                            text,
+                            id: \.hash
+                        ) {
+                            sentence in
                             SentenceItem(
                                 bgColor: Color(hex: Palette.randomColor()),
                                 text: sentence)
@@ -69,11 +74,17 @@ struct SentencesView: View {
                 }
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
         }.offset(y: 15)
+            .onAppear {
+                activeTense = tenses.first!
+                text = sentences[activeTense]!.compactMap { $0 }
+            }
     }
 }
 
 #Preview {
+    let sentences = SampleData.favorite.sentences
+
     SentencesView(
-        sentences: SampleData.baseSentences,
-        word: "Hedonism")
+        word: SampleData.favorite.word,
+        sentences: sentences, tenses: sentences.keys.compactMap { $0 })
 }
