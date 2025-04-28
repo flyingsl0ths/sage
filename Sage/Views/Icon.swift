@@ -11,7 +11,7 @@ struct Icon: View {
     private var iconName: String
     private var iconSize: CGFloat
 
-    init(iconName: String, iconSize: CGFloat = 28.0) {
+    init(iconName: String, iconSize: CGFloat = 27.0) {
         self.iconName = iconName
         self.iconSize = iconSize
     }

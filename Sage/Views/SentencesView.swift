@@ -24,9 +24,9 @@ struct SentencesView: View {
             )
             .offset(x: 70)
 
-            HStack(spacing: 4) {
+            HStack(spacing: 0) {
                 ScrollView {
-                    VStack(spacing: 70) {
+                    VStack(spacing: 66) {
                         ForEach(sentences.keys.compactMap { $0 }, id: \.hash) {
                             tense in
                             Button(action: {
@@ -36,14 +36,13 @@ struct SentencesView: View {
                                 VStack {
                                     Text(tense)
                                         .lineLimit(1)
-                                        .padding(.bottom, -8)
                                         .overlay(
                                             tense == activeTense
                                                 ? RoundedRectangle(
                                                     cornerRadius: 20.0
                                                 )
                                                 .frame(height: 1)
-                                                .offset(y: 15)
+                                                .offset(y: 12)
                                                 : nil
                                         )
                                 }
@@ -53,9 +52,9 @@ struct SentencesView: View {
                             .font(.system(size: textSize))
                         }
                     }
-                    .offset(y: 15)
-
-                    .frame(width: 73)
+                    .offset(y: 26)
+                    .frame(width: 62)
+                    .padding(.horizontal, 6)
 
                 }
 

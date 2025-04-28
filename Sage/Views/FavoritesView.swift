@@ -19,12 +19,11 @@ struct FavoritesView: View {
     @Binding var favorites: [Word]
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Text("Favorites")
                 .font(.largeTitle).underline().frame(
                     maxWidth: .infinity, alignment: .leading
                 )
-                .padding(.vertical, 16)
                 .padding(.horizontal, 36)
 
             let copiedToClipboardOffset = 16.0
@@ -73,9 +72,9 @@ struct FavoritesView: View {
                     ) { updated in
                         swapCard(updated)
                     }
-                    .padding(.horizontal, 66)
+                    .padding(.horizontal, 72)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxHeight: .infinity)
             }
             .onAppear {
                 currentIndex = favorites.count - 1
@@ -142,7 +141,7 @@ struct FavoritesView: View {
                 .presentationDetents([.medium, .large])
             }
         )
-        .padding(.vertical, 12)
+        .padding(.vertical, 10)
         .frame(maxHeight: .infinity)
         .zIndex(0)
     }
