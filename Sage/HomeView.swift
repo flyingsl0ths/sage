@@ -98,6 +98,12 @@ struct HomeView: View {
                         toSettingsPage: $toSettingsPage,
                         settings: $user.settings
                     )
+                    .onDisappear {
+                        Task {
+                            await user.updateSettings()
+                        }
+                    }
+
                     Spacer()
 
                     FavoritesButton(

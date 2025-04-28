@@ -5,7 +5,7 @@
 //  Created by Gabriel Celis on 10/20/24.
 //
 
-struct Word: Hashable, Equatable {
+struct Word: Hashable, Equatable, Codable {
     var word: String = ""
     var phonetics: String = ""
     var definition: String = ""

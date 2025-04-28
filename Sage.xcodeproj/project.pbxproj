@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D1E7A3D2DBFECA1009844C4 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1E7A3C2DBFEC9D009844C4 /* FileUtils.swift */; };
 		6D28198D2D1E40CB005E430E /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D28198C2D1E40CB005E430E /* Carousel.swift */; };
 		6D37F1352CAB458B00CAEB34 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D37F1342CAB458B00CAEB34 /* SearchQuery.swift */; };
 		6D3A729F2CA3A820007CC6BF /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3A729E2CA3A820007CC6BF /* SearchBar.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D1E7A3C2DBFEC9D009844C4 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		6D28198C2D1E40CB005E430E /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
 		6D37F1342CAB458B00CAEB34 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		6D3A729E2CA3A820007CC6BF /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		6D3DAC532CC62EE3005A3EBA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6D1E7A3C2DBFEC9D009844C4 /* FileUtils.swift */,
 				6DCADF492D4089EB004EDB57 /* User.swift */,
 				6DCADF472D4088C4004EDB57 /* Settings.swift */,
 				6D6D887F2CF6A8F500CC56CE /* Favorite.swift */,
@@ -252,6 +255,7 @@
 				6D9429962D76ED9200DC6505 /* Speech.swift in Sources */,
 				6D4AC6362D199C3600D29167 /* WordView.swift in Sources */,
 				6D3DAC552CC62F54005A3EBA /* Word.swift in Sources */,
+				6D1E7A3D2DBFECA1009844C4 /* FileUtils.swift in Sources */,
 				6D6D88A22CFD3DEB00CC56CE /* SettingsButton.swift in Sources */,
 				6DFDA3CD2D07A6450067BB38 /* SettingsEntry.swift in Sources */,
 				6D6D88802CF6A8F600CC56CE /* Favorite.swift in Sources */,
