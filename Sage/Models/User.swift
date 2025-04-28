@@ -17,7 +17,7 @@ let SETTINGS_FILE = "settings.json"
     public var query: String = ""
     public var accentColor: Color = .accent
 
-    func fetchWord(q: String) async throws -> Word? {
+    func fetchWord(_ q: String) async throws -> Word? {
         guard let url = URL(string: "\(ENDPOINT)/\(q)")
         else { return nil }
 
