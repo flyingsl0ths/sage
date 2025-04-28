@@ -44,7 +44,7 @@ struct WordView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 HStack(spacing: 12) {
-                    Text(word.pronounciation)
+                    Text(word.phonetics)
                         .font(.system(size: 24))
 
                     Image(systemName: "speaker.wave.2")

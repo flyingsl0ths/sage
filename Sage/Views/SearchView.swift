@@ -33,7 +33,7 @@ struct SearchView: View {
                             ForEach(results, id: \.self) { result in
                                 SearchQuery(
                                     word: result.word,
-                                    pronounciation: result.pronounciation,
+                                    pronounciation: result.phonetics,
                                     definition: result.definition
                                 )
                                 .padding(.vertical, 4)

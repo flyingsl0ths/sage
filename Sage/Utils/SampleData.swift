@@ -16,7 +16,7 @@ struct SampleData {
         [
             Word(
                 word: "run",
-                pronounciation: "rʌn",
+                phonetics: "rʌn",
                 definition: "to move swiftly on foot",
                 synonyms: ["sprint", "jog"],
                 antonyms: ["walk", "stand"],
@@ -28,7 +28,7 @@ struct SampleData {
 
             Word(
                 word: "light",
-                pronounciation: "laɪt",
+                phonetics: "laɪt",
                 definition: "something that makes things visible",
                 synonyms: ["illumination", "glow"],
                 antonyms: ["darkness", "shadow"],
@@ -42,7 +42,7 @@ struct SampleData {
 
             Word(
                 word: "cold",
-                pronounciation: "koʊld",
+                phonetics: "koʊld",
                 definition: "having a low temperature",
                 synonyms: ["chilly", "freezing"],
                 antonyms: ["hot", "warm"],
@@ -56,7 +56,7 @@ struct SampleData {
 
             Word(
                 word: "break",
-                pronounciation: "breɪk",
+                phonetics: "breɪk",
                 definition: "to separate into pieces",
                 synonyms: ["shatter", "crack"],
                 antonyms: ["fix", "mend"],
@@ -72,7 +72,7 @@ struct SampleData {
 
             Word(
                 word: "play",
-                pronounciation: "pleɪ",
+                phonetics: "pleɪ",
                 definition: "to engage in an activity for enjoyment",
                 synonyms: ["perform", "act"],
                 antonyms: ["work", "labor"],
@@ -86,7 +86,7 @@ struct SampleData {
 
             Word(
                 word: "fast",
-                pronounciation: "fæst",
+                phonetics: "fæst",
                 definition: "moving quickly",
                 synonyms: ["quick", "speedy"],
                 antonyms: ["slow", "delayed"],
@@ -98,7 +98,7 @@ struct SampleData {
 
             Word(
                 word: "hard",
-                pronounciation: "hɑrd",
+                phonetics: "hɑrd",
                 definition: "firm, solid, or difficult",
                 synonyms: ["difficult", "tough"],
                 antonyms: ["easy", "soft"],
@@ -112,7 +112,7 @@ struct SampleData {
 
             Word(
                 word: "cool",
-                pronounciation: "kuːl",
+                phonetics: "kuːl",
                 definition: "of a low temperature, or stylish",
                 synonyms: ["chilly", "trendy"],
                 antonyms: ["hot", "unfashionable"],
@@ -124,7 +124,7 @@ struct SampleData {
 
             Word(
                 word: "right",
-                pronounciation: "raɪt",
+                phonetics: "raɪt",
                 definition: "correct or a direction",
                 synonyms: ["correct", "just"],
                 antonyms: ["wrong", "left"],
@@ -136,7 +136,7 @@ struct SampleData {
 
             Word(
                 word: "warm",
-                pronounciation: "wɔrm",
+                phonetics: "wɔrm",
                 definition: "moderately high temperature or friendly",
                 synonyms: ["hot", "cozy"],
                 antonyms: ["cold", "chilly"],

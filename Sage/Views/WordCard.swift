@@ -20,7 +20,7 @@ struct WordCard: View {
 
     var body: some View {
         let title: CGFloat = 34
-        let subTitle: CGFloat = 16
+        let subTitle: CGFloat = 17
         let buttonFontSize: CGFloat = 12
 
         VStack(spacing: 80) {
@@ -30,7 +30,7 @@ struct WordCard: View {
                     .frame(
                         maxWidth: .infinity, alignment: .leading)
 
-                Text(word.pronounciation)
+                Text(word.phonetics)
                     .opacity(0.7)
                     .font(.system(size: subTitle))
                     .frame(
@@ -50,40 +50,45 @@ struct WordCard: View {
                     .font(.system(size: subTitle))
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack(spacing: 24) {
-                    ForEach(word.synonyms, id: \.self) { synonym in
-                        Text(synonym)
-                            .font(.system(size: buttonFontSize))
-                            .foregroundStyle(.black)
-                            .padding(12)
-                            .lineLimit(1)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 40)
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
-                            .onTapGesture {
-                                UIPasteboard.general.string = synonym
-                                copiedToClipboard.toggle()
-
-                                DispatchQueue.main.asyncAfter(
-                                    deadline: .now() + 0.85
-                                ) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 24) {
+                        ForEach(word.synonyms, id: \.self) {
+                            synonym in
+                            Text(synonym)
+                                .font(.system(size: buttonFontSize))
+                                .foregroundStyle(.black)
+                                .padding(12)
+                                .lineLimit(1)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 40)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
+                                .onTapGesture {
+                                    UIPasteboard.general.string = synonym
                                     copiedToClipboard.toggle()
-                                }
-                            }
 
+                                    DispatchQueue.main.asyncAfter(
+                                        deadline: .now() + 0.85
+                                    ) {
+                                        copiedToClipboard.toggle()
+                                    }
+                                }
+
+                        }
                     }
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading)
+                    .padding(1)
+
                 }
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading)
             }
 
         }.background(
             RoundedRectangle(cornerRadius: 30).fill(
                 Color(hex: Palette.fromString(word.word))
             )
-            .padding(-40)
+            .padding(-32)
         )
         .offset(offset)
         .rotationEffect(.degrees(Double(offset.width / 20)))

@@ -7,14 +7,14 @@
 
 struct Word: Hashable, Equatable {
     var word: String = ""
-    var pronounciation: String = ""
+    var phonetics: String = ""
     var definition: String = ""
     var synonyms: [String] = []
     var antonyms: [String] = []
     var sentences: [String: [String]] = [:]
 
     var isEmpty: Bool {
-        word.isEmpty && pronounciation.isEmpty && definition.isEmpty
+        word.isEmpty && phonetics.isEmpty && definition.isEmpty
             && synonyms.isEmpty
     }
 }
